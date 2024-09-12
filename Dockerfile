@@ -1,7 +1,10 @@
-FROM alpine:3.11
+ARG base_image
 
-RUN apk add --update bash jq wget && \
-  rm -rf /var/cache/apk/* && \
-  mkdir -p /opt/resource/logs/
+FROM ${base_image}
+
+RUN wget -q -L -O /usr/local/bin/jq "https://github.com/jqlang/jq/releases/latest/download/jq-linux-amd64" && \
+  chmod +x /usr/local/bin/jq && \
+  mkdir -p /opt/resource/logs/    
 ADD assets/ /opt/resource/
 RUN chmod +x /opt/resource/*
+
